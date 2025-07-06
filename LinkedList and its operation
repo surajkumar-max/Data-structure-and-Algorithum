@@ -1,0 +1,139 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+struct Node* insertathead(struct Node *head)
+{
+    struct Node *ptr = (struct Node*)malloc(sizeof(struct Node));
+    ptr->prev = NULL;
+    ptr ->data = 100;
+    ptr  -> next = head;
+    head->prev = ptr;
+    return ptr ;
+}
+ struct Node* insertatposition(struct Node *head, int index) 
+ {
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *p = head;
+    struct Node *q = head -> next ;
+
+    for(int i=0;i< index-1 ;i++)
+    {
+        p =p-> next ;
+        q = q->next ;
+    }
+    ptr->prev = p;
+    ptr ->next = q;
+    ptr -> data = 70;
+    q-> prev = ptr ;
+    p->next = ptr;
+    return head;
+    
+ }
+struct Node * insertatvalue(struct Node *head ,int value)
+{
+    struct Node *ptr = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *p = head ;
+    struct Node *q= head->next;
+
+    while (q->data != value && q->next != NULL)
+    {
+        p= p->next;
+        q = q->next;
+    }
+    ptr->prev = p;
+    ptr ->data = 120;
+    ptr ->next  = q;
+    q -> prev = ptr ;
+    p -> next = ptr; 
+    return head;
+}
+
+struct Node* insertatend(struct Node *head)
+{
+    struct Node *ptr = (struct Node*)malloc(sizeof(struct Node));
+    struct Node *p = head;
+    while (p -> next != NULL)
+    {
+        p = p->next;
+    }
+    ptr -> prev = p;
+    ptr -> data = 90;
+    p -> next = ptr;
+    ptr -> next = NULL; // inserting at end in single and double linked list;
+    
+    return head ;
+}
+
+void  traverselinkedlist(struct Node *head)
+{
+    while (head-> next != NULL)
+    {
+        printf("Addess : %p \t Element : %d \t Address : %p\n",(void*)head->prev , head->data ,(void*)head->next );
+        head = head->next;
+    }
+    
+}
+int main()
+{
+    struct Node *head ,*second ,*third ,*forth , *fifth,*sixth;
+
+    head = (struct Node*)malloc(sizeof(struct Node));
+    second = (struct Node*)malloc(sizeof(struct Node));
+    third = (struct Node*)malloc(sizeof(struct Node));
+    forth = (struct Node*)malloc(sizeof(struct Node));
+    fifth =(struct Node *)malloc(sizeof(struct Node));
+    sixth =(struct Node *)malloc(sizeof(struct Node));
+
+    head->prev = NULL;
+    head->data = 10 ;
+    head->next = second;
+
+    second ->prev = head ;
+    second-> data = 20;
+    second ->next = third;
+
+    third ->prev =second ;
+    third ->data = 30;
+    third ->next = forth;
+
+    forth ->prev = third ;
+    forth ->data = 40;
+    forth -> next = fifth;
+
+    fifth -> prev =forth ;
+    fifth ->data = 50;
+    fifth ->next = sixth;
+    
+    sixth-> prev = fifth;
+    sixth->data = 60;
+    sixth->next = NULL;
+    printf("Before inserting : \n ");
+    traverselinkedlist(head);
+   
+    head = insertathead(head);
+    printf("after inserting node at head :\n");
+    traverselinkedlist(head);
+
+    printf("after inserting at postion : \n");
+
+    head = insertatposition(head ,4);
+    
+    traverselinkedlist (head);
+
+    printf("after inserting at end : \n ");
+    head = insertatend(head);
+
+    traverselinkedlist(head);
+
+    printf("After inserting at value :\n");
+
+    head = insertatvalue(head,40);
+
+    traverselinkedlist(head);
+}  
